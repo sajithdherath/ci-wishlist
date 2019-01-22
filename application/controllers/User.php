@@ -53,12 +53,11 @@ class User extends CI_Controller {
     public function signup() {
         if ($this->input->server('REQUEST_METHOD') == 'POST') {
             $response = array();
-            $username = $this->input->post("username");
-            $password = $this->input->post("password");
-            $user = array("username" => $username, "password" => sha1($password));
-            $user["list_name"] = $this->input->post("list_name");
-            $user["list_description"] = $this->input->post("list_description");
-            $signup_status = $this->userModel->insertUser($user);
+            $input_data = json_decode(file_get_contents('php://input'), true);
+            $input_data["password"]=sha1($input_data["password"]);
+            unset($input_data["user_id"]);
+            unset($input_data["rpt_password"]);
+            $signup_status = $this->userModel->insertUser($input_data);
             if ($signup_status["status"] == "ALREADY_USER") {
                 $response["status"] = "ALREADY_USER";
             } else {

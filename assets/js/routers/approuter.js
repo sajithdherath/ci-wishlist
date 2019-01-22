@@ -9,9 +9,11 @@ app.routers.AppRouter = Backbone.Router.extend({
     home: function () {
         if (!app.loginView) {
             app.loginView = new app.views.LoginFormView({model: new app.models.User()});
+            app.loginView.render();
+        }else {
+            console.log("already logged");
         }
-        var view = app.loginView.render();
-        $('#app').html(view);
+
 
     },
 
