@@ -14,6 +14,8 @@
     <script src="<?php echo base_url(); ?>assets/js/models/user.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/models/listItem.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/views/loginFormView.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/views/listView.js"></script>
+    <script src="<?php echo base_url(); ?>assets/js/views/itemView.js"></script>
     <script src="<?php echo base_url(); ?>assets/js/routers/approuter.js"></script>
 
 </head>
@@ -54,7 +56,7 @@
                 <div class="bar"></div>
             </div>
             <div class="input-container">
-                <input type="password" id="reg-password" value="<%= password%>"required="required"/>
+                <input type="password" id="reg-password" value="<%= password%>" required="required"/>
                 <label for="password">Password</label>
                 <div class="bar"></div>
             </div>
@@ -78,7 +80,12 @@
             </div>
         </form>
 </script>
+<script type="text/template" id="list-template">
+    <ul id="item">
 
+    </ul>
+
+</script>
 <div class="container">
 
 </div>

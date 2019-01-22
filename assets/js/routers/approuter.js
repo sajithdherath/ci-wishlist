@@ -8,22 +8,21 @@ app.routers.AppRouter = Backbone.Router.extend({
 
     home: function () {
         if (!app.loginView) {
-            app.loginView = new app.views.LoginFormView({model: new app.models.User()});
+            app.user = new app.models.User();
+            app.loginView = new app.views.LoginFormView({model: app.user});
             app.loginView.render();
-        }else {
+        } else {
             console.log("already logged");
+            app.listView = new app.views.ListView({model: new app.collections.ItemCollection()});
+            app.listView.render();
         }
-
-
     },
 
     viewList: function () {
-        if (!app.searchView) {
-            app.searchView = new app.views.SearchBookView();
+        if (!app.listView) {
+            app.listView = new app.views.ListView({collection: new app.collections.ItemCollection()});
+            app.listView.render();
         }
-        var myview = app.searchView.render().el;
-        $('#app').html(myview);
     }
-
 
 });
