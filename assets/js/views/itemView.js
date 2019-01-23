@@ -1,13 +1,9 @@
 var app = app || {};
 
 app.views.ItemView = Backbone.View.extend({
-    el:"#item",
-    tagName:"li",
-    initialize:function () {
 
-    },
+    el:"#item",
     render:function () {
-        this.$el.html(this.model.get("id"));
-        return this;
+        this.$el.append("<li>"+this.model.get("id")+"</li>");
     }
 });

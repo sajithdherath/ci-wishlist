@@ -86,6 +86,7 @@
     </ul>
 
 </script>
+<script type="text/template" id="item-template"></script>
 <div class="container">
 
 </div>

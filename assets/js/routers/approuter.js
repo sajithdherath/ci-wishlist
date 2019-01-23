@@ -21,7 +21,18 @@ app.routers.AppRouter = Backbone.Router.extend({
     viewList: function () {
         if (!app.listView) {
             app.listView = new app.views.ListView({collection: new app.collections.ItemCollection()});
-            app.listView.render();
+            var url = app.listView.collection.url + "?user=" + app.user.get("user_id");
+            app.listView.collection.fetch({
+                reset:true,
+                "url": url,
+                wait:true,
+                success: function (collection, response) {
+                    console.log("init");
+                    app.listView.render();
+
+                }
+            });
+
         }
     }
 
