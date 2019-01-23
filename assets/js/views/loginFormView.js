@@ -43,15 +43,15 @@ app.views.LoginFormView = Backbone.View.extend({
             this.model.save(this.model.attributes, {
                 "url": url,
                 success: function (model, response) {
-                    $('.container').stop().removeClass('active');
+                    $('.container-cust').stop().removeClass('active');
                 }
             });
         }
     },
     toggle: function () {
-        $('.container').stop().addClass('active');
+        $('.container-cust').stop().addClass('active');
     },
     close: function () {
-        $('.container').stop().removeClass('active');
+        $('.container-cust').stop().removeClass('active');
     }
 });

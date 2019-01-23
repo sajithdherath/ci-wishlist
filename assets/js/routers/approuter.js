@@ -8,18 +8,18 @@ app.routers.AppRouter = Backbone.Router.extend({
 
     home: function () {
         if (!app.loginView) {
+            console.log("logged");
             app.user = new app.models.User();
             app.loginView = new app.views.LoginFormView({model: app.user});
             app.loginView.render();
         } else {
             console.log("already logged");
-            app.listView = new app.views.ListView({model: new app.collections.ItemCollection()});
-            app.listView.render();
+            this.viewList();
         }
     },
 
     viewList: function () {
-        if (!app.listView) {
+        if (!app.listView && app.user) {
             app.listView = new app.views.ListView({collection: new app.collections.ItemCollection()});
             var url = app.listView.collection.url + "?user=" + app.user.get("user_id");
             app.listView.collection.fetch({
@@ -32,6 +32,8 @@ app.routers.AppRouter = Backbone.Router.extend({
 
                 }
             });
+
+        }else {
 
         }
     }
