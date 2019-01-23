@@ -5,8 +5,9 @@
  * Date: 1/20/19
  * Time: 6:29 AM
  */
+require(APPPATH.'/libraries/REST_Controller.php');
 
-class User extends CI_Controller {
+class User extends REST_Controller {
 
     public function __construct() {
         parent::__construct();
@@ -15,12 +16,10 @@ class User extends CI_Controller {
 
     }
 
-    public function login() {
-        if ($this->input->server('REQUEST_METHOD') == 'POST') {
-            $response = array();
-            $input_data = json_decode(file_get_contents('php://input'), true);
-            $username = $input_data["username"];
-            $password = $input_data["password"];
+    public function login_post() {
+
+            $username = $this->post["username"];
+            $password = $this->post["password"];
             $user = array("username" => $username, "password" => $password);
 
             if (!$this->checkSession($username)) {
