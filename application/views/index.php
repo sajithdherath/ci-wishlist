@@ -201,6 +201,12 @@
         </form>
     </div>
 </script>
+<script type="text/template" id="logout-template">
+    <nav id="navbar" class="navbar fixed-top navbar-light bg-light">
+        <a class="navbar-brand" id="logout" href="#logout">Logout</a>
+    </nav>
+
+</script>
 <script type="text/template" id="status-template"></script>
 <div class="container container-cust">
 </div>
@@ -213,7 +219,7 @@
         position: relative !important;
         max-width: 460px !important;
         width: 100% !important;
-        margin: 0 auto 100px !important;
+        margin: 80px auto 100px !important;
     }
 
     .input-container textarea {

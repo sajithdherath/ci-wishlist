@@ -4,7 +4,8 @@ app.routers.AppRouter = Backbone.Router.extend({
     routes: {
         "": "viewList",
         "login": "login",
-        "edit/:id": "viewEditBook"
+        "logout":"logout"
+
     },
 
     login: function () {
@@ -45,11 +46,10 @@ app.routers.AppRouter = Backbone.Router.extend({
             app.appRouter.navigate("#login", {trigger: true, replace: true});
         }
     },
-    viewEditBook:function (id) {
-        if (!isNaN(id) && id !== 0) {
-            app.editView = app.views.ItemEditView({model:app.list.get(id)});
-
-        }
+    logout:function () {
+        $("#navbar").remove();
+        localStorage.clear();
+        window.location.href = "";
     }
 
 })

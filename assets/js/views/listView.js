@@ -39,11 +39,15 @@ app.views.ListView = Backbone.View.extend({
         "click #submit-add": "addOne",
         "click #btn-edit": "viewEditModal",
         "click #btn-delete": "deleteOne",
+
     },
     render: function () {
         console.log("render");
+        template_logout = _.template($('#logout-template').html());
+        $("body").append(template_logout);
         template = _.template($('#list-template').html());
         this.$el.html(template(app.user.attributes));
+
         this.collection.each(function (item) {
             console.log(item);
             var itemView = new app.views.ItemView({model: item});
@@ -82,6 +86,7 @@ app.views.ListView = Backbone.View.extend({
         deletetModel.destroy({"url":deletetModel.url+deletetModel.get('id')});
         app.list.remove(deletetModel);
         this.render();
-    }
+    },
+
 
 });
