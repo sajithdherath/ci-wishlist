@@ -9,8 +9,9 @@ app.routers.AppRouter = Backbone.Router.extend({
 
     login: function () {
         userJson = JSON.parse(localStorage.getItem("user"));
-        app.user = new app.models.User(userJson);
-        if (!app.user) {
+        if (userJson==null) {
+            app.user = new app.models.User(userJson);
+
             if (!app.loginView) {
                 app.loginView = new app.views.LoginFormView({model: app.user});
                 app.loginView.render();
@@ -22,8 +23,9 @@ app.routers.AppRouter = Backbone.Router.extend({
 
     viewList: function () {
         userJson = JSON.parse(localStorage.getItem("user"));
-        app.user = new app.models.User(userJson);
-        if (app.user) {
+        if (userJson!=null) {
+            app.user = new app.models.User(userJson);
+
             if (!app.listView) {
                 app.list = new app.collections.ItemCollection();
                 app.listView = new app.views.ListView({collection: app.list});
