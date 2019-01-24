@@ -25,8 +25,8 @@ app.views.LoginFormView = Backbone.View.extend({
             this.model.save(this.model.attributes, {
                 "url": url,
                 success: function (model, reponse) {
-                    app.appRouter.navigate("#list", {trigger: true, replace: true});
-
+                    localStorage.setItem('user', JSON.stringify(model));
+                    app.appRouter.navigate("#", {trigger: true, replace: true});
                 }
             });
         }

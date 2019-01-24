@@ -2,40 +2,52 @@ var app = app || {};
 
 app.routers.AppRouter = Backbone.Router.extend({
     routes: {
-        "": "home",
-        "list": "viewList"
+        "": "viewList",
+        "login": "login",
+        "edit/:id": "editbook"
     },
 
-    home: function () {
-        if (!app.loginView) {
-            console.log("logged");
-            app.user = new app.models.User();
-            app.loginView = new app.views.LoginFormView({model: app.user});
-            app.loginView.render();
+    login: function () {
+        userJson = JSON.parse(localStorage.getItem("user"));
+        app.user = new app.models.User(userJson);
+        if (!app.user) {
+            if (!app.loginView) {
+                app.loginView = new app.views.LoginFormView({model: app.user});
+                app.loginView.render();
+            }
         } else {
-            console.log("already logged");
             this.viewList();
         }
     },
 
     viewList: function () {
-        if (!app.listView && app.user) {
-            app.listView = new app.views.ListView({collection: new app.collections.ItemCollection()});
-            var url = app.listView.collection.url + "?user=" + app.user.get("user_id");
-            app.listView.collection.fetch({
-                reset:true,
-                "url": url,
-                wait:true,
-                success: function (collection, response) {
-                    console.log("init");
-                    app.listView.render();
+        userJson = JSON.parse(localStorage.getItem("user"));
+        app.user = new app.models.User(userJson);
+        if (app.user) {
+            if (!app.listView) {
+                app.list = new app.collections.ItemCollection();
+                app.listView = new app.views.ListView({collection: app.list});
+                var url = app.listView.collection.url + app.user.get("user_id");
+                app.list.fetch({
+                    "url": url,
+                    wait: true,
+                    success: function (collection, response) {
+                        app.listView.render();
+                    }
+                });
 
-                }
-            });
-
-        }else {
+            } else {
+                this.viewList();
+            }
+        } else {
+            app.appRouter.navigate("#login", {trigger: true, replace: true});
+        }
+    },
+    editbook:function (id) {
+        if (!isNaN(id) && id !== 0) {
 
         }
     }
 
-});
+})
+;

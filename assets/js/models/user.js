@@ -1,6 +1,6 @@
 var app = app || {};
+
 app.models.User = Backbone.Model.extend({
-    urlRoot: '/advanced-server-side/cw2/user/',
     defaults: {
         username: "",
         password: "",
@@ -8,7 +8,6 @@ app.models.User = Backbone.Model.extend({
         list_name: "",
         list_description: ""
     },
-    url: '/advanced-server-side/cw2/user/',
-
+    url: app.base_url + 'user/',
 
 });

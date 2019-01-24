@@ -27,28 +27,16 @@ class User extends REST_Controller {
         $password = $this->post("password");
         $user = array("username" => $username, "password" => $password);
 
-        if (!$this->checkSession($username)) {
-            $result = $this->userModel->login($user);
-            $login_status = $result["status"];
-            if ($login_status == "SUCCESS") {
-                $user_data = array(
-                    'user_id' => $username,
-                    'logged_in' => true
-                );
-                $this->session->set_userdata($user_data);
-                $this->response(array('user_id' => $result["user_id"]), 200);
-
-            } elseif ($login_status == "NOT_REGISTERED") {
-                $this->response(array("status" => "NOT_REGISTERED"), 401);
-            } elseif ($login_status == "PWD_INCORRECT") {
-                $this->response(array("status" => "PWD_INCORRECT"), 401);
-            }
-
-        } else {
-            $response["status"] = "ALREADY_LOGGED";;
-            $result = $this->userModel->login($user);
-            $response["user_id"] = $result["user_id"];
+        $result = $this->userModel->login($user);
+        $login_status = $result["status"];
+        if ($login_status == "SUCCESS") {
+            $this->response(array('user_id' => $result["user_id"]), 200);
+        } elseif ($login_status == "NOT_REGISTERED") {
+            $this->response(array("status" => "NOT_REGISTERED"), 401);
+        } elseif ($login_status == "PWD_INCORRECT") {
+            $this->response(array("status" => "PWD_INCORRECT"), 401);
         }
+
 
     }
 
@@ -82,18 +70,13 @@ class User extends REST_Controller {
         }
     }
 
-    public function is_logged() {
 
+    public function logout_get() {
+
+        $username = $this->input->get("user");
+        $session_items = array('username', "logged_in", "user");
+        $this->session->unset_userdata($session_items);
+        $this->response(array("status" => "successfully logged out", "session" => $this->sessoin));
     }
-
-    public function logout() {
-        if ($this->input->server('REQUEST_METHOD') == 'GET') {
-            $username = $this->input->get("user");
-            $session_items = array('username', "logged_in");
-            $this->session->unset_userdata($session_items);
-            var_dump($this->session->userdata);
-            echo json_encode(array("status" => "successfully logged out"));
-        }
-    }
-
 }
+

@@ -3,6 +3,9 @@ app.views = {};
 app.routers = {};
 app.models = {};
 app.collections = {};
+app.categories={};
+app.status={};
+app.base_url = '/advanced-server-side/cw2/api/';
 
 function validateLoginForm() {
     var user = {

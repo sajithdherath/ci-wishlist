@@ -82,28 +82,47 @@
         </form>
 </script>
 <script type="text/template" id="list-template">
+    <div class="pen-title">
+        <h1><%=username%>'s List</h1><span><%=list_description%></span>
+    </div>
     <div id="item">
 
     </div>
 
 </script>
 <script type="text/template" id="item-template">
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="width: 30rem;">
         <div class="card-body">
             <h5 class="card-title"><%=title%></h5>
             <h6 class="card-subtitle mb-2 text-muted">Rs.<%=price%></h6>
-            <p class="card-text"><%=description%></p>
+            <p class="card-text"><%if(status_id=='1'){%>
+                Must Have
+                <%}else if(status_id=='2'){%>
+                Would be Nice to Have
+                <%}else{%>
+                If you can<%}%></p>
             <a href="<%=url%>" class="card-link">View</a>
-
+            <button><a href='#edit/<%= id %>'>Edit</button>
         </div>
     </div>
 </script>
+<script type="text/template" id="item-add-template">
+<form>
+    <label>Name</label>
+    <input type="text"id="title">
+    <label>URL</label>
+    <input type="text"id="url">
+    <label>Price</label>
+    <input type="text"id="price">
+    <select id="category"></select>
+    <select id="status"></select>
+</form>
+</script>
+<script type="text/template" id="cat-template"></script>
+<script type="text/template" id="status-template"></script>
 <div class="container container-cust">
-
 </div>
 </div>
-
-
 </body>
 </html>
 
