@@ -1,10 +1,44 @@
 var app = app || {};
 
+app.views.ItemEditView = Backbone.View.extend({
+    el: "#editModal",
+    events: {
+        "click #submit-edit": "editOne"
+    },
+    render: function () {
+        console.log("sedit");
+        template = _.template($('#edit-template').html());
+        this.$el.html(template(this.model.attributes));
+        this.$el.css('display', 'block');
+
+    },
+    editOne: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var data = validateEditForm();
+        if (!data) {
+        } else {
+            var editModel = new app.models.Item(data);
+            editModel.save();
+            app.list.set({editModel}, {remove: false, add: false});
+            this.$el.css('display', 'none');
+            app.listView.render();
+        }
+    }
+
+});
+
 app.views.ListView = Backbone.View.extend({
     el: ".container",
     initialize: function () {
-        this.listenTo(this.list, 'add', this.addOne);
 
+    },
+    events: {
+        "click #btn-add": "viewModal",
+        "click .close": "closeModal",
+        "click #submit-add": "addOne",
+        "click #btn-edit": "viewEditModal",
+        "click #btn-delete": "deleteOne",
     },
     render: function () {
         console.log("render");
@@ -16,8 +50,38 @@ app.views.ListView = Backbone.View.extend({
             itemView.render();
         });
     },
-    addOne:function () {
-        
+    addOne: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var data = validateAddForm();
+        if (!data) {
+
+        } else {
+            var addModel = new app.models.Item(data);
+            addModel.save();
+            app.list.push(addModel);
+
+        }
+    },
+    viewModal: function () {
+        $("#myModal").css('display', 'block');
+    },
+    closeModal: function () {
+        $("#myModal").css('display', 'none');
+    },
+
+    viewEditModal: function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+        var editModel = app.list.get(String($(e.currentTarget).attr('data-id')));
+        app.editView = new app.views.ItemEditView({model: editModel});
+        app.editView.render();
+    },
+    deleteOne:function (e) {
+        var deletetModel = app.list.get(String($(e.currentTarget).attr('data-id')));
+        deletetModel.destroy({"url":deletetModel.url+deletetModel.get('id')});
+        app.list.remove(deletetModel);
+        this.render();
     }
 
 });

@@ -4,7 +4,7 @@ app.routers.AppRouter = Backbone.Router.extend({
     routes: {
         "": "viewList",
         "login": "login",
-        "edit/:id": "editbook"
+        "edit/:id": "viewEditBook"
     },
 
     login: function () {
@@ -29,7 +29,7 @@ app.routers.AppRouter = Backbone.Router.extend({
             if (!app.listView) {
                 app.list = new app.collections.ItemCollection();
                 app.listView = new app.views.ListView({collection: app.list});
-                var url = app.listView.collection.url + app.user.get("user_id");
+                var url = app.listView.collection.url + app.user.get("id");
                 app.list.fetch({
                     "url": url,
                     wait: true,
@@ -45,8 +45,9 @@ app.routers.AppRouter = Backbone.Router.extend({
             app.appRouter.navigate("#login", {trigger: true, replace: true});
         }
     },
-    editbook:function (id) {
+    viewEditBook:function (id) {
         if (!isNaN(id) && id !== 0) {
+            app.editView = app.views.ItemEditView({model:app.list.get(id)});
 
         }
     }

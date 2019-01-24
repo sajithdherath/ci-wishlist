@@ -35,7 +35,8 @@ class Item extends REST_Controller {
             "price" => $this->post("price"),
             "category_id" => $this->post("category_id"),
             "status_id" => $this->post("status_id"),
-            "title" => $this->post("title")
+            "title" => $this->post("title"),
+            "description" => $this->post("description")
         );
         $item_id = $this->itemModel->insertItem($item);
         $this->response(array("id" => $item_id), 200);
@@ -55,8 +56,8 @@ class Item extends REST_Controller {
         $this->response(array("status" => "Item Updated"), 200);
     }
 
-    public function index_delete() {
-        $item_id = $this->input->get("id");
+    public function index_delete($id) {
+        $this->itemModel->deleteItem($id);
         $this->response(array("status" => "Item Deleted"), 204);
     }
 }

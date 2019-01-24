@@ -30,7 +30,7 @@ class User extends REST_Controller {
         $result = $this->userModel->login($user);
         $login_status = $result["status"];
         if ($login_status == "SUCCESS") {
-            $this->response(array('user_id' => $result["user_id"]), 200);
+            $this->response(array('id' => $result["user_id"]), 200);
         } elseif ($login_status == "NOT_REGISTERED") {
             $this->response(array("status" => "NOT_REGISTERED"), 401);
         } elseif ($login_status == "PWD_INCORRECT") {

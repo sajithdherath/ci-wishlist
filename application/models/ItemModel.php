@@ -22,7 +22,8 @@ class ItemModel extends CI_Model {
     }
 
     public function updateItem($item){
-        $this->db->update($item);
+        $this->db->where('id',$item['id']);
+        $this->db->update('item',$item);
     }
 
     public function deleteItem($id){

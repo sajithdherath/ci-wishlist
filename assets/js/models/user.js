@@ -4,7 +4,7 @@ app.models.User = Backbone.Model.extend({
     defaults: {
         username: "",
         password: "",
-        user_id: null,
+        id: null,
         list_name: "",
         list_description: ""
     },

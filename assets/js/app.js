@@ -3,8 +3,8 @@ app.views = {};
 app.routers = {};
 app.models = {};
 app.collections = {};
-app.categories={};
-app.status={};
+app.categories = {};
+app.status = {};
 app.base_url = '/advanced-server-side/cw2/api/';
 
 function validateLoginForm() {
@@ -12,9 +12,12 @@ function validateLoginForm() {
         'username': $("input#login-username").val(),
         'password': $("input#login-password").val()
     };
-    if (!user.username|| !user.password) {return false; }
+    if (!user.username || !user.password) {
+        return false;
+    }
     return user;
 }
+
 function validateRegisterForm() {
     var user = {
         'username': $("input#reg-username").val(),
@@ -23,10 +26,43 @@ function validateRegisterForm() {
         'list_name': $("input#list-name").val(),
         'list_description': $("textarea#description").val(),
     };
-    if (!user.username|| !user.password) {return false; }
+    if (!user.username || !user.password) {
+        return false;
+    }
     return user;
 }
-$(document).ready(function() {
+
+function validateAddForm() {
+    var user = {
+        'title': $("input#title").val(),
+        'description': $("input#description").val(),
+        'price': $("input#price").val(),
+        'url': $("input#url").val(),
+        'category_id': $("select#category").val(),
+        'status_id': $("select#status").val(),
+        'user_id':app.user.get('id'),
+
+    };
+
+    return user;
+}
+
+function validateEditForm() {
+    var user = {
+        'title': $("input#edit-title").val(),
+        'description': $("input#edit-description").val(),
+        'price': $("input#edit-price").val(),
+        'url': $("input#edit-url").val(),
+        'category_id': $("select#edit-category").val(),
+        'status_id': $("select#edit-status").val(),
+        'id':$("input#id").val(),
+        'user_id':app.user.get('id')
+    };
+
+    return user;
+}
+
+$(document).ready(function () {
     app.appRouter = new app.routers.AppRouter();
     $(function () {
         Backbone.history.start();
