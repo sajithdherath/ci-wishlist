@@ -6,10 +6,10 @@
  * Time: 10:54 AM
  */
 
-class StatusModel {
+class StatusModel extends CI_Model {
 
     public function getStatus() {
         $query = $this->db->get("status");
-        return $this->$query->result_array();
+        return $query->result_array();
     }
 }

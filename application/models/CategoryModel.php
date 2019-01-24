@@ -10,6 +10,6 @@ class CategoryModel extends CI_Model {
 
     public function getCategories() {
         $query = $this->db->get("category");
-        return $this->$query->result_array();
+        return $query->result_array();
     }
 }

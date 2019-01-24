@@ -18,7 +18,7 @@ class Category extends REST_Controller {
     }
 
     public function index_get() {
-        $categories = $this->categoryModel->getStatus();
+        $categories = $this->categoryModel->getCategories();
         $this->response($categories, 200);
     }
 }
