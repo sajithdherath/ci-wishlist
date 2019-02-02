@@ -60,4 +60,6 @@ class Item extends REST_Controller {
         $this->itemModel->deleteItem($id);
         $this->response(array("status" => "Item Deleted"), 204);
     }
+
+
 }

@@ -24,7 +24,7 @@ function validateRegisterForm() {
         'password': $("input#reg-password").val(),
         'rpt_password': $("input#rpt-password").val(),
         'list_name': $("input#list-name").val(),
-        'list_description': $("textarea#description").val(),
+        'list_description': $("input#description").val(),
     };
     if (!user.username || !user.password) {
         return false;
@@ -33,7 +33,7 @@ function validateRegisterForm() {
 }
 
 function validateAddForm() {
-    var user = {
+    var item= {
         'title': $("input#title").val(),
         'description': $("input#description").val(),
         'price': $("input#price").val(),
@@ -44,11 +44,11 @@ function validateAddForm() {
 
     };
 
-    return user;
+    return item;
 }
 
 function validateEditForm() {
-    var user = {
+    var item = {
         'title': $("input#edit-title").val(),
         'description': $("input#edit-description").val(),
         'price': $("input#edit-price").val(),
@@ -59,7 +59,7 @@ function validateEditForm() {
         'user_id':app.user.get('id')
     };
 
-    return user;
+    return item;
 }
 
 $(document).ready(function () {

@@ -33,11 +33,18 @@ class UserModel extends CI_Model {
             $has_password = $row->password;
             if (sha1($user['password']) == $has_password) {
                 $response["status"] = "SUCCESS";
-                $response["user_id"] = $row->id;
+                $response["user"] = $row;
             } else {
                 $response["status"] = "PWD_INCORRECT";
             }
         }
         return $response;
+    }
+
+    public function getUser($id){
+        $this->db->select('list_name,description');
+        $this->db->where('id',$id);
+        $query = $this->db->get('user');
+        return $query->row();
     }
 }

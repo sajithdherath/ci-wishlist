@@ -17,6 +17,7 @@ class ItemModel extends CI_Model {
         $this->db->select('*');
         $this->db->where('user_id',$user_id);
         $this->db->from('item');
+        $this->db->order_by('status_id', 'ASC');
         $query = $this->db->get();
         return $query->result_array();
     }

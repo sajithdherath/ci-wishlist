@@ -21,6 +21,11 @@ class User extends REST_Controller {
         $this->load->model('userModel');
     }
 
+    public function index_get($id){
+        $user=$this->userModel->getUser($id);
+        $this->response($user,200);
+    }
+
     function login_post() {
 
         $username = $this->post("username");
@@ -30,7 +35,11 @@ class User extends REST_Controller {
         $result = $this->userModel->login($user);
         $login_status = $result["status"];
         if ($login_status == "SUCCESS") {
-            $this->response(array('id' => $result["user_id"]), 200);
+            $this->response(array(
+                'id' => $result["user"]->id,
+                'list_name' => $result["user"]->list_name,
+                'list_description' => $result["user"]->description),
+                200);
         } elseif ($login_status == "NOT_REGISTERED") {
             $this->response(array("status" => "NOT_REGISTERED"), 401);
         } elseif ($login_status == "PWD_INCORRECT") {
@@ -40,14 +49,12 @@ class User extends REST_Controller {
 
     }
 
-
     public function signup_post() {
-
         $user = array(
             "username" => $this->post('username'),
-            "password" => $this->post('password'),
+            "password" => sha1($this->post('password')),
             "list_name" => $this->post('list_name'),
-            "description" => $this->post('description')
+            "description" => $this->post('list_description')
         );
         $signup_status = $this->userModel->insertUser($user);
         if ($signup_status["status"] == "ALREADY_USER") {
@@ -60,23 +67,5 @@ class User extends REST_Controller {
         }
     }
 
-
-    public function checkSession($username) {
-
-        if ($this->session->username == $username) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-
-    public function logout_get() {
-
-        $username = $this->input->get("user");
-        $session_items = array('username', "logged_in", "user");
-        $this->session->unset_userdata($session_items);
-        $this->response(array("status" => "successfully logged out", "session" => $this->sessoin));
-    }
 }
 
